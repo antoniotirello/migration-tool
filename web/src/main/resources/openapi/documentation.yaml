@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: Migration Tool API
+  version: 1.0.0
+
+paths:
+
+  /stop:
+    post:
+      tags:
+        - System
+      summary: Stopping server
+      description: |
+        The server will be stopped.
+        Use this method when the UI is going to be closed.
+        Make sure to save your work before calling this endpoint.
+      responses:
+        202:
+          description: OK
+
+  /info:
+    get:
+      tags:
+        - Info
+      summary: version info
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InfoResponse"
+
+
+components:
+  schemas:
+    InfoResponse:
+      type: object
+      properties:
+        version:
+          type: string
+          example: "a.b.c"
+        name:
+          type: string
+          example: "MigrationTool"
+      required:
+        - version
+        - name
