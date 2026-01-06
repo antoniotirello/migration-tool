@@ -9,6 +9,8 @@ class MigrationToolPlugin : Plugin<Project> {
         project.tasks.register<OpenUserInterfaceTask>("openMigrationTool") {
             group = "migration"
             description = "Opens the migration tool web interface"
+            projectRoot.set(project.layout.projectDirectory)
+            outputs.upToDateWhen { false }
         }
     }
 }

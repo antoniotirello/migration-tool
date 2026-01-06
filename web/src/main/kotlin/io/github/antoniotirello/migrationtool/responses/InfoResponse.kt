@@ -6,13 +6,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class InfoResponse(
     val version: String,
-    val name: String
+    val name: String,
+    val rootPath: String,
 ) {
     companion object {
         fun fromModel(info: BackendInfo): InfoResponse =
             InfoResponse(
                 version = info.version,
-                name = info.name
+                name = info.name,
+                rootPath = info.projectAbsolutePath,
             )
     }
 }

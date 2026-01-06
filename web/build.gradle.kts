@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
     `java-library`
     `maven-publish`
+    jacoco
 }
 
 description = "Optional web backend"
@@ -34,13 +35,17 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.swagger)
     implementation(libs.ktor.server.openapi)
-    implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
     implementation(libs.ktor.server.status.pages)
 
+    implementation(libs.jooq)
 
     testImplementation(libs.ktor.server.test.host)
-    testImplementation(libs.kotlin.test.junit)
+
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.junit.jupiter)
+
+    testImplementation(libs.ktor.server.test.host)
 }
 
 publishing {
@@ -51,22 +56,6 @@ publishing {
             artifactId = "migrationtool-web"
         }
     }
-}
-
-val dev by sourceSets.creating {
-    kotlin.srcDir("src/dev/kotlin")
-    resources.srcDir("src/dev/resources")
-
-    // inherit classpath from main
-    compileClasspath += sourceSets["main"].output + sourceSets["main"].compileClasspath
-    runtimeClasspath += sourceSets["main"].output + sourceSets["main"].runtimeClasspath
-}
-
-// Dev task to run the backend
-tasks.register<JavaExec>("runDev") {
-    group = "development"
-    classpath = dev.runtimeClasspath
-    mainClass.set("io.github.antoniotirello.migrationtool.DevLauncherKt")
 }
 
 tasks.withType<JavaExec> {
@@ -85,4 +74,14 @@ tasks.register<WriteProperties>("writeBuildInfo") {
 
 tasks.named<ProcessResources>("processResources") {
     dependsOn("writeBuildInfo")
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
+    }
 }
