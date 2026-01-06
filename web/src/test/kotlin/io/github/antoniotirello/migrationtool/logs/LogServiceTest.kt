@@ -142,6 +142,22 @@ class LogServiceTest {
     }
 
     @Test
+    fun `readAll should return an empty list if no file exists`() {
+        val lastRunId = "asd"
+        val currentRunLog = tempDir.resolve("run-test-1.jsonl")
+
+        val logService = LogService(
+            logDirectory = tempDir,
+            logFile = currentRunLog,
+            runId = lastRunId
+        )
+
+        val records = logService.readAll()
+
+        assertEquals(records.size, 0, "Total number of records if no file exists")
+    }
+
+    @Test
     fun `getLogSummary should return logEntries as counter of entries`() {
         val lastRunId = "asd"
         val currentRunLog = tempDir.resolve("run-test-1.jsonl")
