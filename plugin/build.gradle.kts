@@ -18,7 +18,7 @@ repositories {
 
 gradlePlugin {
     plugins {
-        create("migrationToolPlugin") {
+        register("migrationToolPlugin") {
             id = "io.github.antoniotirello.migrationtool"
             implementationClass = "io.github.antoniotirello.migrationtool.MigrationToolPlugin"
         }

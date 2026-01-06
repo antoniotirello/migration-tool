@@ -1,7 +1,9 @@
 [versions]
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 ktor = "3.3.2"
-logback = "1.5.22"
+jooq = "3.20.10"
+studerJooq = "10.2"
+junit = "5.10.2"
 
 [libraries]
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
@@ -14,11 +16,11 @@ ktor-server-swagger = { module = "io.ktor:ktor-server-swagger", version.ref = "k
 ktor-server-openapi = { module = "io.ktor:ktor-server-openapi", version.ref = "ktor" }
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 
-logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
 
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-
-
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
