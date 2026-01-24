@@ -20,7 +20,9 @@ application {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib)
+    implementation(project(":core"))
+
+    implementation(libs.jackson.kotlin)
 }
 
 publishing {
