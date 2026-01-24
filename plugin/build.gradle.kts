@@ -12,6 +12,12 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation(project(":core"))
+
+    implementation(libs.jackson.kotlin)
+}
+
 gradlePlugin {
     plugins {
         register("migrationToolPlugin") {

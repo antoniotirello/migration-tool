@@ -1,10 +1,10 @@
 [versions]
 spring-boot = "3.5.9"
 kotlin = "2.2.20"
-jackson = "2.17.2"
+jackson = "2.20.1"
 junit = "5.10.2"
 openapi = "2.8.15"
-dependency-management = "1.1.7"
+classgraph = "4.8.184"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -17,10 +17,9 @@ spring-boot-actuator = { module = "org.springframework.boot:spring-boot-starter-
 spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 springdoc-openapi-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "openapi" }
 spring-boot-core = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring-boot" }
 
+classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }

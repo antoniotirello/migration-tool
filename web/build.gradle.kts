@@ -1,4 +1,3 @@
-// web/build.gradle.kts
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
@@ -19,14 +18,13 @@ repositories {
 }
 
 dependencies {
-     implementation(project(":core"))
-    // implementation(project(":store"))
+    implementation(project(":core"))
 
     implementation(libs.spring.boot.core)
     implementation(libs.spring.boot.web)
     implementation(libs.spring.boot.actuator)
     implementation(libs.jackson.kotlin)
-    implementation(libs.kotlin.reflect)
+
     implementation(libs.springdoc.openapi.ui)
 
     testImplementation(platform(libs.junit.bom))
@@ -44,13 +42,11 @@ tasks.test {
     useJUnitPlatform()
 }
 
-// Crea un BootJar eseguibile
 tasks.named<BootJar>("bootJar") {
     enabled = true
     archiveClassifier.set("boot")
 }
 
-// Crea anche un JAR normale per dipendenze
 tasks.named<Jar>("jar") {
     enabled = true
     archiveClassifier.set("")
@@ -63,7 +59,7 @@ publishing {
 
             groupId = "io.github.antoniotirello.migrationtool"
             artifactId = "web"
-            version = "0.0.1"
+            version = project.version.toString()
         }
     }
 }
