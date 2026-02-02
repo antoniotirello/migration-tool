@@ -7,4 +7,5 @@ data class MigrationToolConfig(
     val projectClasspath: String,
     var toolVersion: String,
     var openBrowser: Boolean,
+    var devPort: Int? = null,
 )

@@ -126,6 +126,11 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
 
         val mapper = jacksonObjectMapper().findAndRegisterModules()
 
+        val devPort: Int? = project.providers
+            .gradleProperty("devPort")
+            .orNull
+            ?.toIntOrNull()
+
         configFile.writeText(
             mapper.writerWithDefaultPrettyPrinter()
                 .writeValueAsString(
@@ -136,6 +141,7 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
                         projectClasspath = projectClasspathArg,
                         toolVersion = migrationToolVersion.get(),
                         openBrowser = project.hasProperty("openBrowser"),
+                        devPort = devPort,
                     )
                 )
         )

@@ -68,7 +68,9 @@ fun main(args: Array<String>) {
         append(config.projectClasspath)
     }
 
-    val port = ServerSocket(0).use { it.localPort }
+    val port: Int =
+        config.devPort
+            ?: ServerSocket(0).use { it.localPort }
 
     val command = listOf(
         javaBin,
