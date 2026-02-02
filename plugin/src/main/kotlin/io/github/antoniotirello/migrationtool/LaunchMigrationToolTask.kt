@@ -134,7 +134,8 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
                         webServerJar = webServerJar.get().asFile.absolutePath,
                         projectDir = project.projectDir.absolutePath,
                         projectClasspath = projectClasspathArg,
-                        toolVersion = migrationToolVersion.get()
+                        toolVersion = migrationToolVersion.get(),
+                        openBrowser = project.hasProperty("openBrowser"),
                     )
                 )
         )
@@ -148,7 +149,7 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
         )
 
         logger.lifecycle("Launching in separate process...")
-        logger.lifecycle("Command: ${command.joinToString(" ")}")
+        //logger.lifecycle("Command: ${command.joinToString(" ")}")
 
         val logFile = project.layout.buildDirectory
             .file("migration-tool.log")

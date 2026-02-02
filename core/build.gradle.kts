@@ -18,6 +18,11 @@ repositories {
 
 dependencies {
     implementation(libs.classgraph)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.java.time)
+    api(libs.sqlite.jdbc)
 }
 
 publishing {
