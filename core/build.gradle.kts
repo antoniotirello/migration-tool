@@ -23,6 +23,11 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.java.time)
     api(libs.sqlite.jdbc)
+
+    testImplementation(libs.h2)
+    testImplementation(libs.junit)
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 publishing {
@@ -75,4 +80,8 @@ sourceSets.main.get().kotlin.srcDir(layout.buildDirectory.dir("generated-src/ver
 
 tasks.named("compileKotlin") {
     dependsOn(generateVersionFile)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
