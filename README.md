@@ -56,3 +56,17 @@ Possible values:
 
 - JAVA
 - KOTLIN
+
+
+## Tasks
+
+### launchMigrationTool
+
+This task accepts the following **development** parameters:
+
+- openBrowser
+- devPort
+
+Currently, only Firefox is supported as a browser.
+The `devPort` parameter is intended for UI development and allows you to specify a fixed port to run the server on.
+If `devPort` is not provided, a random available port will be used.

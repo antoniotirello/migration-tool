@@ -25,11 +25,17 @@ dependencies {
     implementation(libs.spring.boot.actuator)
     implementation(libs.jackson.kotlin)
 
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.java.time)
+
     implementation(libs.springdoc.openapi.ui)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.spring.boot.test)
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.h2)
 }
 
 kotlin {
@@ -40,6 +46,7 @@ kotlin {
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("spring.profiles.active", "test")
 }
 
 tasks.named<BootJar>("bootJar") {

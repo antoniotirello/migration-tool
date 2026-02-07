@@ -1,6 +1,5 @@
 package io.github.antoniotirello.migrationtool
 
-import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
@@ -10,6 +9,7 @@ import org.gradle.api.tasks.*
 import java.io.File
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.github.antoniotirello.migrationtool.api.MigrationLanguage
+import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
 
 abstract class LaunchMigrationToolTask : DefaultTask() {
 
@@ -126,6 +126,11 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
 
         val mapper = jacksonObjectMapper().findAndRegisterModules()
 
+        val devPort: Int? = project.providers
+            .gradleProperty("devPort")
+            .orNull
+            ?.toIntOrNull()
+
         configFile.writeText(
             mapper.writerWithDefaultPrettyPrinter()
                 .writeValueAsString(
@@ -134,7 +139,9 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
                         webServerJar = webServerJar.get().asFile.absolutePath,
                         projectDir = project.projectDir.absolutePath,
                         projectClasspath = projectClasspathArg,
-                        toolVersion = migrationToolVersion.get()
+                        toolVersion = migrationToolVersion.get(),
+                        openBrowser = project.hasProperty("openBrowser"),
+                        devPort = devPort,
                     )
                 )
         )
@@ -148,7 +155,7 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
         )
 
         logger.lifecycle("Launching in separate process...")
-        logger.lifecycle("Command: ${command.joinToString(" ")}")
+        //logger.lifecycle("Command: ${command.joinToString(" ")}")
 
         val logFile = project.layout.buildDirectory
             .file("migration-tool.log")
