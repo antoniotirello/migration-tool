@@ -36,7 +36,7 @@ cd "$PROJECT1_DIR"
 echo "🚀 Project 2: build + task '$GRADLE_TASK'"
 cd "$PROJECT2_DIR"
 
-./gradlew clean build
+./gradlew clean
 ./gradlew "$GRADLE_TASK" -PopenBrowser=firefox -PdevPort=8888
 
 echo "✅ Operation completed successfully"

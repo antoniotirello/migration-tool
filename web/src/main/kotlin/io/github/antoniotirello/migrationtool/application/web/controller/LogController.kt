@@ -2,7 +2,7 @@ package io.github.antoniotirello.migrationtool.application.web.controller
 
 import io.github.antoniotirello.migrationtool.application.web.dto.ApiPaths
 import io.github.antoniotirello.migrationtool.application.web.service.LogReaderService
-import io.github.antoniotirello.migrationtool.infrastructure.logging.database.RunsResults
+import io.github.antoniotirello.migrationtool.logging.dto.RunsResults
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping

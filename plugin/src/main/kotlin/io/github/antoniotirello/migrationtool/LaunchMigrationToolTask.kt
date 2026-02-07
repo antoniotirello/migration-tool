@@ -1,6 +1,5 @@
 package io.github.antoniotirello.migrationtool
 
-import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
@@ -10,6 +9,7 @@ import org.gradle.api.tasks.*
 import java.io.File
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.github.antoniotirello.migrationtool.api.MigrationLanguage
+import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
 
 abstract class LaunchMigrationToolTask : DefaultTask() {
 

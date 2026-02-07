@@ -49,7 +49,7 @@ class MigrationToolPlugin : Plugin<Project> {
             )
         )
 
-        project.tasks.register("launchMigrationTool", LaunchMigrationToolTask::class.java) {
+        val launchTask = project.tasks.register("launchMigrationTool", LaunchMigrationToolTask::class.java) {
             group = "migration"
             description = "Launches the migration tool in a separate process"
             launcherClasspath.from(launcherConfig)
@@ -73,6 +73,10 @@ class MigrationToolPlugin : Plugin<Project> {
                     }
                 )
             )
+        }
+
+        project.tasks.findByName("build")?.let { buildTask ->
+            launchTask.configure { dependsOn(buildTask) }
         }
     }
 }

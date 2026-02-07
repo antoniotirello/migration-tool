@@ -1,11 +1,11 @@
 package io.github.antoniotirello.migrationtool.launcher
 
-import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
 import java.io.File
 import java.nio.file.Paths
 import kotlin.system.exitProcess
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
 import java.awt.Desktop
 import java.lang.Thread.sleep
 import java.net.HttpURLConnection
@@ -160,7 +160,7 @@ fun waitForServer(
                 return true
             }
         } catch (_: Exception) {
-            // server not ready yet - silenzioso
+            // server not ready yet
         }
 
         sleep(pollIntervalMs)

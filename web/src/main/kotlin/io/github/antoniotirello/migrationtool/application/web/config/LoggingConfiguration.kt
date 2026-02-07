@@ -1,19 +1,43 @@
 package io.github.antoniotirello.migrationtool.application.web.config
 
-import io.github.antoniotirello.migrationtool.infrastructure.logging.api.LogReader
-import io.github.antoniotirello.migrationtool.infrastructure.logging.database.DatabaseConfig
-import io.github.antoniotirello.migrationtool.infrastructure.logging.database.DatabaseRunContext
-import io.github.antoniotirello.migrationtool.infrastructure.logging.database.ExposedLogReader
+import io.github.antoniotirello.migrationtool.application.web.service.InfoService
+import io.github.antoniotirello.migrationtool.context.AppBootstrap
+import io.github.antoniotirello.migrationtool.context.AppContext
+import io.github.antoniotirello.migrationtool.context.AppContextBuilder
+import io.github.antoniotirello.migrationtool.logging.api.LogReader
+import io.github.antoniotirello.migrationtool.logging.api.LogWriter
+import io.github.antoniotirello.migrationtool.paths.AppPaths
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 
 @Configuration
 class LoggingConfiguration {
-    @Bean
-    fun logReader(runContext: DatabaseRunContext): LogReader =
-        ExposedLogReader(runContext)
+
+    @Value($$"${BACKEND_CONFIG_PROJECT_PATH:/tmp/default}")
+    lateinit var projectPath: String
 
     @Bean
-    fun databaseRunContext() : DatabaseRunContext =
-        DatabaseRunContext(DatabaseConfig)
+    fun logReader(runContext: AppContext): LogReader =
+        LogReader(runContext)
+
+    @Bean
+    fun logWriter(runContext: AppContext): LogWriter =
+        LogWriter(runContext)
+
+    @Bean
+    @Profile("!test")
+    fun databaseRunContext(infoService: InfoService) : AppContext {
+        val appVersion = infoService.getInfo().version
+
+        val context = AppContextBuilder()
+            .useSqliteFile(
+                AppPaths.sqliteDbFile(projectPath).toAbsolutePath().toString()
+            )
+            .withVersion(appVersion)
+            .build()
+
+        return AppBootstrap.init(context)
+    }
 }
