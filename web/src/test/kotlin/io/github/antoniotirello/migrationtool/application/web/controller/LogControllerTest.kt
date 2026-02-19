@@ -41,13 +41,18 @@ class LogControllerTest {
             .andExpect {
                 status { isOk() }
                 content { contentType("application/json") }
-                jsonPath("$.size()") { value(1) } // esempio: ti aspetti 3 elementi
+                jsonPath("$.content.size()") { value(1) }
 
-                jsonPath("$[0].id") { exists() }
-                jsonPath("$[0].startedAt") { exists() }
-                jsonPath("$[0].endedAt") { value(nullValue()) }
-                jsonPath("$[0].environment") { value(nullValue()) }
-                jsonPath("$[0].lastRun") { value(`is`(true)) }
+                jsonPath("$.content[0].id") { exists() }
+                jsonPath("$.content[0].startedAt") { exists() }
+                jsonPath("$.content[0].endedAt") { value(nullValue()) }
+                jsonPath("$.content[0].environment") { value(nullValue()) }
+                jsonPath("$.content[0].lastRun") { value(`is`(true)) }
+
+                jsonPath("$.page") { value(0) }
+                jsonPath("$.size") { value(10) }
+                jsonPath("$.totalElements") { value(1) }
+                jsonPath("$.totalPages") { value(1) }
             }
     }
 }

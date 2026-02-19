@@ -1,10 +1,13 @@
 package io.github.antoniotirello.migrationtool.application.web.controller
 
+import io.github.antoniotirello.migrationtool.application.web.request.PageRequest
 import io.github.antoniotirello.migrationtool.application.web.dto.ApiPaths
 import io.github.antoniotirello.migrationtool.application.web.service.LogReaderService
+import io.github.antoniotirello.migrationtool.dto.PagedResponse
 import io.github.antoniotirello.migrationtool.logging.dto.RunsResults
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -24,7 +27,11 @@ Returns the list of all migration runs executed on the server.
 The current run is identified by `lastRun` equal to **true**. 
     """
     )
-    fun getAllRuns(): List<RunsResults> {
-        return logReaderService.getAllRuns()
+    fun getAllRuns(
+        @Valid pageRequest: PageRequest? = null
+    ): PagedResponse<RunsResults> {
+        val page = pageRequest?.page ?: 0
+        val size = pageRequest?.size ?: 10
+        return logReaderService.getAllRuns(page, size)
     }
 }
