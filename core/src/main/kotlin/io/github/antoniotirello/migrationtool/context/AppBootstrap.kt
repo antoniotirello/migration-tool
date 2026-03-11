@@ -1,5 +1,6 @@
 package io.github.antoniotirello.migrationtool.context
 
+import io.github.antoniotirello.migrationtool.events.EventBus
 import io.github.antoniotirello.migrationtool.logging.dao.Run
 import io.github.antoniotirello.migrationtool.logging.dao.RunId
 import io.github.antoniotirello.migrationtool.logging.database.SchemaManager
@@ -19,11 +20,11 @@ object AppBootstrap {
 
         val runId = run.id.value
 
-
         return AppContext(
             appVersion = context.appVersion,
             database = context.database,
             currentRunId = RunId(runId),
+            eventBus = EventBus()
         )
     }
 }

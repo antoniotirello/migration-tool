@@ -34,8 +34,12 @@ dependencies {
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.spring.boot.test)
+    testImplementation(libs.spring.boot.test.autoconfigure)
+    testImplementation(libs.spring.boot.webmvc.test)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.h2)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
 }
 
 kotlin {

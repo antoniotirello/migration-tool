@@ -20,8 +20,11 @@ class LogReaderTest: TestContextAwareHelper() {
             }
         }
 
-        val runList = reader.getAllRuns()
-        assert(runList.isNotEmpty())
-        assert(runList.size == 3) {"Actual size is ${runList.size}"}
+        val runOutput = reader.getAllRuns()
+        println(runOutput)
+
+
+        assert(runOutput.content.isNotEmpty())
+        assert(runOutput.content.size == 3) {"Actual size is ${runOutput.content.size}"}
     }
 }

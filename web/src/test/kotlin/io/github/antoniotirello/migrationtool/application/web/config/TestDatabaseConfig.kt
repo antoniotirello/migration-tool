@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary
 
 @TestConfiguration
 class TestDatabaseConfig {
-    @Bean
+    @Bean("testDatabaseRunContext")
     @Primary
     fun databaseRunContext(): AppContext {
         val context = AppContextBuilder()

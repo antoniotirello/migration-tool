@@ -16,7 +16,8 @@ class SchemaManager {
 
     fun dropAll(db: Database) = transaction(db) {
         SchemaUtils.drop(
-            Runs, LogEntries
+            Runs,
+            LogEntries
         )
     }
 }

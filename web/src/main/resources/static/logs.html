@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE Log Viewer</title>
+    <style>
+        /* Basic page styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        /* Header with title and shutdown button */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 6px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2980b9;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) { background-color: #ecf0f1; }
+        tr:nth-child(odd)  { background-color: #ffffff; }
+
+        /* Log level coloring */
+        .level-FATAL { color: #ffffff; background-color: #c0392b; font-weight: bold; }
+        .level-ERROR { color: #ffffff; background-color: #e74c3c; }
+        .level-WARN  { color: #000000; background-color: #f1c40f; }
+        .level-INFO  { color: #ffffff; background-color: #3498db; }
+        .level-DEBUG { color: #2c3e50; background-color: #95a5a6; }
+        .level-TRACE { color: #2c3e50; background-color: #bdc3c7; }
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- Title on the left, shutdown button on the right -->
+    <h2>Live Log Entries:</h2>
+    <button id="shutdownBtn">Shutdown</button>
+</header>
+
+<table id="logs">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Timestamp</th>
+        <th>Level</th>
+        <th>Message</th>
+        <th>Event</th>
+        <th>Payload</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    // Open SSE connection
+    const evt = new EventSource("/api/v1/log/events");
+    const tbody = document.querySelector("#logs tbody");
+
+    // Map numeric severity to log level name
+    const severityMap = {
+        50: "FATAL",
+        40: "ERROR",
+        30: "WARN",
+        20: "INFO",
+        10: "DEBUG",
+        5:  "TRACE"
+    };
+
+    evt.onmessage = e => {
+        const log = JSON.parse(e.data);
+
+        const tr = document.createElement("tr");
+
+        // Format timestamp in English
+        const ts = new Date(log.timestamp).toLocaleString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+        });
+
+        // Create table cells
+        const fields = [
+            {value: log.id},
+            {value: ts},
+            {value: severityMap[log.level], className: `level-${severityMap[log.level]}`},
+            {value: log.message},
+            {value: log.event ?? ""},
+            {value: log.payload ?? ""}
+        ];
+
+        fields.forEach(f => {
+            const td = document.createElement("td");
+            td.textContent = f.value;
+            if(f.className) td.classList.add(f.className);
+            tr.appendChild(td);
+        });
+
+        // Insert new log at the top
+        tbody.insertBefore(tr, tbody.firstChild);
+    };
+
+    // Shutdown button click
+    document.getElementById("shutdownBtn").addEventListener("click", () => {
+        fetch("/api/v1/shutdown", { method: "POST" })
+            .then(r => alert("Shutdown triggered!"))
+            .catch(e => alert("Error: " + e));
+    });
+</script>
+
+</body>
+</html>

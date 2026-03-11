@@ -1,6 +1,7 @@
 package io.github.antoniotirello.migrationtool.context
 
 import io.github.antoniotirello.migrationtool.database.DatabaseFactory
+import io.github.antoniotirello.migrationtool.events.EventBus
 import org.jetbrains.exposed.v1.jdbc.Database
 
 class AppContextBuilder(
@@ -24,6 +25,7 @@ class AppContextBuilder(
     fun build(): AppContext =
         AppContext(
             appVersion = appVersion,
+            eventBus = EventBus(),
             database = database
                 ?: error("Database not configured"),
         )
