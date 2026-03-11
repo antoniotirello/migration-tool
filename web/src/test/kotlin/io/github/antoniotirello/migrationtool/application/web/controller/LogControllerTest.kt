@@ -4,12 +4,10 @@ import io.github.antoniotirello.migrationtool.application.web.config.TestDatabas
 import io.github.antoniotirello.migrationtool.context.AppBootstrap
 import io.github.antoniotirello.migrationtool.context.AppContext
 import io.github.antoniotirello.migrationtool.context.AppContextBuilder
-import org.hamcrest.core.Is.`is`
-import org.hamcrest.core.IsNull.nullValue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
@@ -41,18 +39,21 @@ class LogControllerTest {
             .andExpect {
                 status { isOk() }
                 content { contentType("application/json") }
-                jsonPath("$.content.size()") { value(1) }
-
-                jsonPath("$.content[0].id") { exists() }
-                jsonPath("$.content[0].startedAt") { exists() }
-                jsonPath("$.content[0].endedAt") { value(nullValue()) }
-                jsonPath("$.content[0].environment") { value(nullValue()) }
-                jsonPath("$.content[0].lastRun") { value(`is`(true)) }
 
                 jsonPath("$.page") { value(0) }
                 jsonPath("$.size") { value(10) }
                 jsonPath("$.totalElements") { value(1) }
                 jsonPath("$.totalPages") { value(1) }
+
+                jsonPath("$.content") { isArray() }
+                jsonPath("$.content.length()") { value(1) }
+
+                jsonPath("$.content[0].id") { isNumber() }
+                jsonPath("$.content[0].startedAt") { isString() }
+                jsonPath("$.content[0].lastRun") { value(true) }
+
+                jsonPath("$.content[0].endedAt") { doesNotExist() }
+                jsonPath("$.content[0].environment") { doesNotExist() }
             }
     }
 }

@@ -3,7 +3,6 @@ package io.github.antoniotirello.migrationtool.logging.api
 import io.github.antoniotirello.migrationtool.context.AppContext
 import io.github.antoniotirello.migrationtool.dto.PagedResponse
 import io.github.antoniotirello.migrationtool.logging.dao.LogEntries
-import io.github.antoniotirello.migrationtool.logging.dao.RunId
 import io.github.antoniotirello.migrationtool.logging.dao.Runs
 import io.github.antoniotirello.migrationtool.logging.dto.LogEntryEvent
 import io.github.antoniotirello.migrationtool.logging.dto.RunsResults
@@ -28,7 +27,7 @@ class LogReader(
             .offset(pageNum.toLong() * pageSize)
             .map {
                 RunsResults(
-                    id = RunId(it[Runs.id].value),
+                    id = it[Runs.id].value,
                     startedAt = it[Runs.startedAt],
                     endedAt = it[Runs.endedAt],
                     environment = it[Runs.environment],
