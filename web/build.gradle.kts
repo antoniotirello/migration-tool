@@ -36,6 +36,8 @@ dependencies {
     testImplementation(libs.spring.boot.test)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.h2)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
 }
 
 kotlin {
