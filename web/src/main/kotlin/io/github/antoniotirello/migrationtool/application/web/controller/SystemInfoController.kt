@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "Info", description = "Get server info")
-@RequestMapping(ApiPaths.V1 + "/info")
+@RequestMapping(ApiPaths.V1 + "/system")
 @RestController
-class InfoController (
+class SystemInfoController (
     private val infoService: InfoService,
     private val logger: LogWriter
 ) {

@@ -1,6 +1,6 @@
 package io.github.antoniotirello.migrationtool.application.web.config
 
-import io.github.antoniotirello.migrationtool.application.web.service.InfoService
+import io.github.antoniotirello.migrationtool.MigrationToolInfo
 import io.github.antoniotirello.migrationtool.context.AppBootstrap
 import io.github.antoniotirello.migrationtool.context.AppContext
 import io.github.antoniotirello.migrationtool.context.AppContextBuilder
@@ -28,8 +28,8 @@ class LoggingConfiguration {
 
     @Bean
     @Profile("!test")
-    fun databaseRunContext(infoService: InfoService) : AppContext {
-        val appVersion = infoService.getInfo().version
+    fun databaseRunContext() : AppContext {
+        val appVersion = MigrationToolInfo.VERSION
 
         val context = AppContextBuilder()
             .useSqliteFile(
