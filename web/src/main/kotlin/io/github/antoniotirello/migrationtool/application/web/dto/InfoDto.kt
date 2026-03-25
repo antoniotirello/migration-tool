@@ -1,5 +1,6 @@
 package io.github.antoniotirello.migrationtool.application.web.dto
 
 data class InfoDto(
-    val version: String
+    val version: String,
+    val runId: Long? = null,
 )
