@@ -21,6 +21,8 @@ class MigrationToolPlugin : Plugin<Project> {
         val launcherConfig = project.configurations.create("migrationToolLauncher") {
             isCanBeConsumed = false
             isCanBeResolved = true
+
+            extendsFrom(project.configurations.getByName("runtimeClasspath"))
         }
 
         /*

@@ -10,10 +10,13 @@ import java.io.File
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.github.antoniotirello.migrationtool.api.MigrationLanguage
 import io.github.antoniotirello.migrationtool.dto.MigrationToolConfig
+import org.gradle.work.DisableCachingByDefault
 
+@DisableCachingByDefault
 abstract class LaunchMigrationToolTask : DefaultTask() {
 
     @get:InputFile
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val webServerJar: RegularFileProperty
 
     @get:InputFiles
@@ -45,8 +48,6 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
     abstract val migrationToolVersion: Property<String>
 
     init {
-        outputs.upToDateWhen { false }
-
         javaExecutable.convention(
             project.providers.provider {
                 val javaHome = System.getProperty("java.home")
@@ -124,6 +125,11 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
         val projectClasspathArg =
             projectClasspath.files.joinToString(File.pathSeparator) { it.absolutePath }
 
+        val fullClasspath = listOf(
+            classpath,
+            projectClasspathArg
+        ).joinToString(File.pathSeparator)
+
         val mapper = jacksonObjectMapper().findAndRegisterModules()
 
         val devPort: Int? = project.providers
@@ -149,7 +155,7 @@ abstract class LaunchMigrationToolTask : DefaultTask() {
         val command = listOf(
             javaBin,
             "-cp",
-            classpath,
+            fullClasspath,
             main,
             "--config=${configFile.absolutePath}"
         )

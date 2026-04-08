@@ -22,12 +22,15 @@ dependencies {
     implementation(libs.exposed.dao)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.java.time)
+    implementation(libs.mustache)
     api(libs.sqlite.jdbc)
 
     testImplementation(libs.h2)
     testImplementation(libs.junit)
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    testImplementation(libs.mockk)
 }
 
 publishing {

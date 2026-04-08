@@ -38,8 +38,7 @@ dependencies {
     testImplementation(libs.spring.boot.webmvc.test)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.h2)
-    testImplementation(libs.mockito)
-    testImplementation(libs.mockito.kotlin)
+
 }
 
 kotlin {

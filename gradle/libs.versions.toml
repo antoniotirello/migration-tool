@@ -1,6 +1,6 @@
 [versions]
-spring-boot = "4.0.3"
-kotlin = "2.2.20"
+spring-boot = "4.0.4"
+kotlin = "2.3.0"
 jackson = "2.20.1"
 junit = "5.10.2"
 openapi = "3.0.2"
@@ -8,8 +8,8 @@ classgraph = "4.8.184"
 exposed = "1.0.0"
 sqlite-jdbc = "3.51.1.0"
 h2 = "2.4.240"
-mockito = "5.5.0"
-mockito-kotlin = "5.3.1"
+mustache = "0.9.14"
+mockk = "1.14.9"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -40,5 +40,6 @@ h2 = { module = "com.h2database:h2", version.ref = "h2" }
 
 sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite-jdbc" }
 
-mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
+mustache = {module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache"}
+
+mockk = {module = "io.mockk:mockk", version.ref = "mockk"}
