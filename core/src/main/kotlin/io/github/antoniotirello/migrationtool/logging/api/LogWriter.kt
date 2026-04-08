@@ -6,15 +6,15 @@ import io.github.antoniotirello.migrationtool.logging.dao.Run
 import io.github.antoniotirello.migrationtool.logging.dto.LogEntryEvent
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
-class LogWriter(
+class LogWriter (
     private val context: AppContext
-) {
+): Logger {
 
-    fun write(
+    override fun write(
         level: LogLevel,
         message: String,
-        event: LogEvent? = null,
-        payload: String? = null
+        event: LogEvent?,
+        payload: String?
     ) {
         val runId = checkNotNull(context.currentRunId) {
             "Run not initialised. Call AppBootstrap.init()"

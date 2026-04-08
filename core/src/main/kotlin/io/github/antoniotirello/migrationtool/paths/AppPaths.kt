@@ -6,8 +6,6 @@ import java.nio.file.Paths
 import java.security.MessageDigest
 
 object AppPaths {
-    private const val APP_NAME = ".migration-tool"
-
     fun homeDir(): Path =
         Paths.get(
             System.getProperty("user.home")

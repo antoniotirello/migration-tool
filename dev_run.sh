@@ -30,7 +30,21 @@ fi
 echo "📦 Project 1: build + publishToMavenLocal"
 cd "$PROJECT1_DIR"
 
-./gradlew clean build publishToMavenLocal
+./gradlew clean build koverHtmlReport koverXmlReport publishToMavenLocal
+REPORT_URL="file://$PROJECT1_DIR/core/build/reports/kover/html/index.html"
+
+echo "📊 Opening report..."
+
+if command -v open >/dev/null 2>&1; then
+  if open -Ra "Firefox" >/dev/null 2>&1; then
+    open -a "Firefox" "$REPORT_URL"
+  else
+    echo "⚠️ Firefox not found, using default browser"
+    open "$REPORT_URL"
+  fi
+else
+  echo "⚠️ 'open' command not found"
+fi
 
 # ---- Project 2 ----
 echo "🚀 Project 2: build + task '$GRADLE_TASK'"
